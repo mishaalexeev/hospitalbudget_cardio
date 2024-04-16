@@ -1,0 +1,92 @@
+<div class="clr-row" style="margin: 2rem">
+  <div class="clr-col-4">
+    <div class="clr-row">
+      <clr-combobox name="regions" [(ngModel)]="pickedRegion" placeholder="Выберите регион" [clrLoading]="loadingRegions">
+        <clr-options>
+          <clr-option *ngFor="let region of regions.data"
+                      name="reg"
+                      [clrValue]="region.region"
+                      ngDefaultControl
+                      (click)="changeRegions()"
+                      (clrInputChange)="changeRegions()">
+            {{region.region}}
+          </clr-option>
+        </clr-options>
+      </clr-combobox>
+    </div>
+    <div class="clr-row" style="margin-left: 1%" style="text-align: center">
+      <p>Коэффициент дифференциации: {{getKdFromRegion()}}
+        <a role="tooltip" aria-haspopup="true" class="tooltip tooltip-sm tooltip-top-right">
+          <cds-icon shape="info-circle" size="24"></cds-icon>
+          <span class="tooltip-content">Значение КД влияет на размер тарифа.</span>
+        </a>
+      </p>
+    </div>
+    <div class="clr-row" style="margin-left: 1%" style="text-align: center">
+      <ng-container>
+        <div class="clr-row">
+          <p>Заработная плата и прочие расходы: {{salaryAndOthers}}%
+            <a role="tooltip" aria-haspopup="true" class="tooltip tooltip-sm tooltip-top-right">
+              <cds-icon shape="info-circle" size="24"></cds-icon>
+              <span class="tooltip-content">Доля на заработную плату (ДЗП) и пр.расходы вычитается из тарифа.</span>
+            </a>
+          </p>
+        </div>
+        <div class="clr-row">
+          <input type="range" (change)="setStorage()" clrRange name="two" [(ngModel)]="salaryAndOthers" (change)="calculateTarifMinusSalaryAndOthers()"/>
+        </div>
+      </ng-container>
+    </div>
+    <div class="clr-row" style="margin-top: 2rem">
+      <button class="btn btn-primary" [disabled]="pickedRegion === null" (click)="loadTarrifs()">Рассчитать тариф</button>
+    </div>
+  </div>
+  <div class="clr-col-8">
+    <div class="clr-row">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Группа ВМП</th>
+<!--          <th>-->
+<!--            НФЗ-->
+<!--            <a role="tooltip" aria-haspopup="true" class="tooltip tooltip-sm tooltip-top-right">-->
+<!--              <cds-icon shape="info-circle" size="24"></cds-icon>-->
+<!--              <span class="tooltip-content">Норматив финансовых затрат</span>-->
+<!--            </a>-->
+<!--          </th>-->
+<!--          <th>-->
+<!--            ДЗП-->
+<!--            <a role="tooltip" aria-haspopup="true" class="tooltip tooltip-sm tooltip-top-right">-->
+<!--              <cds-icon shape="info-circle" size="24"></cds-icon>-->
+<!--              <span class="tooltip-content">Доля заработной платы</span>-->
+<!--            </a>-->
+<!--          </th>-->
+          <th>Тариф, руб</th>
+          <th>Тариф за вычетом ДЗП и пр.расходов, руб.</th>
+        </tr>
+        </thead>
+        <tbody *ngIf="!loadingTable">
+          <tr *ngFor="let tarrif of tarrifDatasource.data">
+            <td style="text-align: left">{{tarrif.medical_group}}</td>
+<!--            <td>{{tarrif.fin_cost_std}}</td>-->
+<!--            <td>{{tarrif.wage_share}}</td>-->
+            <td>{{tarrif.tarif}}</td>
+            <td>{{tarrif.calculated | round}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-container *ngIf="tarrifDatasource.data.length < 1 && !loadingTable">
+      <div class="clr-row" style="text-align: center">
+        <h4 style="width: 100%">Данные не загружены</h4>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="loadingTable">
+      <div class="clr-row">
+        <span class="spinner" style="margin-left: 50%">
+          Loading...
+        </span>
+      </div>
+    </ng-container>
+  </div>
+</div>
