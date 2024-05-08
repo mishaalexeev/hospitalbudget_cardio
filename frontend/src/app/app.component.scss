@@ -2,3 +2,12 @@
 //     margin: 0 !important;
 //     padding: 0 !important;
 // }
+
+.content-area {
+    font-family: Arial, sans-serif;
+    background: rgb(7,69,126);
+    background: linear-gradient(315deg, rgba(7,69,126,1) 0%, rgba(255,255,255,1) 43%);
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+}

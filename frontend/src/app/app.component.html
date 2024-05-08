@@ -1,18 +1,22 @@
+<app-change-language (languageChanged)="onLanguageChanged($event)"></app-change-language>
+
 <div class="main-container">
   <div class="content-container">
+    <app-cookie-banner></app-cookie-banner>
     <nav class="sidenav" >
+      <app-change-language></app-change-language>
       <section class="sidenav-content" >
         <a href="/home" class="nav-link">
-          🏚️ Домашняя страница
+          {{ homePageText }}
         </a>
         <a href="/tarrifs" class="nav-link">
-          1️⃣ Расчет тарифа
+          {{ tarrifsPageText }} 
         </a>
         <a href="/pricing" class="nav-link">
-          2️⃣ Стоимость МИ
+          {{ pricingPageText }}
         </a>
         <a href="/incomes-outcomes" class="nav-link">
-          3️⃣ Доходы и расходы МО
+          {{ incomesoutcomesPageText }} 
         </a>
       </section>
     </nav>
@@ -21,3 +25,4 @@
     </div>
   </div>
 </div>
+

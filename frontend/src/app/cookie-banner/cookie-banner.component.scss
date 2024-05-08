@@ -1,0 +1,44 @@
+.cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+    padding: 10px 20px;
+    display: none;
+    align-items: center;
+    font-family: "Inter", sans-serif;
+    display: flex; /* Добавляем flex-контейнер */
+    z-index: 9999;
+}
+
+.textBanner {
+    color: #61737b !important;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.cookie-banner p {
+    margin: 0;
+    flex: 1; /* Растягиваем текст на всю доступную ширину слева */
+}
+
+.agreeBtn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 3px 10px; /* Уменьшаем отступы внутри кнопки */
+    cursor: pointer;
+    border-radius: 5px; /* Делаем кнопку маленькой и округленной */
+    font-size: 12px; /* Уменьшаем размер текста */
+    margin-left: 10px; /* Добавляем отступ слева от текста */
+    /* Удаляем margin-right, чтобы кнопка прижималась к правому краю */
+    height: 50px; /* Устанавливаем высоту кнопки */
+}
+
+.cookie-banner button:hover {
+    background-color: rgba(7,69,126,0.8);
+}

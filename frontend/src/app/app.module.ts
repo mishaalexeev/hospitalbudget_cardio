@@ -13,6 +13,8 @@ import {TarrifsService} from "./tarrifs/service/tarrifs.service";
 import { RoundPipe } from './round.pipe';
 import { IncomesOutcomesComponent } from './incomes-outcomes/incomes-outcomes.component';
 import { HomeComponent } from './home/home.component';
+import { CookieBannerComponent } from './cookie-banner/cookie-banner.component';
+import { ChangeLanguageComponent } from './change-language/change-language.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { HomeComponent } from './home/home.component';
     TarrifsComponent,
     RoundPipe,
     IncomesOutcomesComponent,
-    HomeComponent
+    HomeComponent,
+    CookieBannerComponent,
+    ChangeLanguageComponent
   ],
   imports: [
     BrowserModule,

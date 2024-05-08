@@ -1,0 +1,18 @@
+.language-btn {
+    position: absolute;
+    bottom: 10px; /* Размещаем кнопку внизу */
+    left: 15px; /* Размещаем кнопку слева */
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: rgba(7,69,126,1);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+.language-btn:hover {
+    background-color: rgba(7,69,126,0.8);
+}
