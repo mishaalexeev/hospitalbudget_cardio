@@ -25,3 +25,5 @@ export class ChangeLanguageComponent {
     this.cdr.detectChanges(); // Добавьте эту строку
   }
 }
+
+//123
