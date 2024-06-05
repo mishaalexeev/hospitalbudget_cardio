@@ -1,125 +1,161 @@
+<!-- <print-results></print-results> -->
+
 <ng-container *ngIf="tariffsNotCalculated">
   <div class="clr-row" style="margin: 2rem">
     <div class="clr-col-6">
-      Требуется расчет тарифов
+      {{ textTariffsRequired }}
     </div>
   </div>
 </ng-container>
 <ng-container *ngIf="miPriceNotCalculated">
   <div class="clr-row" style="margin: 2rem">
     <div class="clr-col-6">
-      Требуется расчет стоимости МИ
+      {{ textMIPriceRequired }}
     </div>
   </div>
 </ng-container>
-<ng-container *ngIf="!tariffsNotCalculated && !miPriceNotCalculated">
-  <div class="clr-row" style="margin: 2rem">
-    <div class="clr-col-6">
-      <div class="clr-row">
-        <table class="table">
-          <thead>
-          <tr>
-            <!-- <th rowspan="2">Есть квоты?</th> -->
-            <th rowspan="2">Номер группы ВМП</th>
-            <th rowspan="2">Модель пациента</th>
-            <th rowspan="2">Метод лечения</th>
-            <th rowspan="2" width="80px">Число пациентов в год</th>
-            <th rowspan="2">Из них число пациентов, нуждающихся в РА</th>
-            <th rowspan="2">Тариф за вычетом ДЗП и прочих расходов, руб.</th>
-            <th colspan="2">Затраты ЛПУ на расходные материалы на 1 пациента</th>
-            <th colspan="2">Затраты ЛПУ на всех пациентов</th>
-            <th rowspan="2">Суммарные затраты на расходные материалы, руб.</th>
-            <th rowspan="2">Бюджет, который ЛПУ получит от ТФОМС за вычетом ДЗП и пр.расходов, руб.</th>
-            <th rowspan="2">Доход ЛПУ, руб.</th>
-          </tr>
-          <tr>
-            <th>Без ротационной атерэктомии</th>
-            <th>С ротационной атерэктомией</th>
-            <th>Без ротационной атерэктомии</th>
-            <th>С ротационной атерэктомией</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let model of datasource">
-            <!-- <td>{{model.haveQuotas ? 'Да' : 'Нет'}}</td> -->
-            <td>{{model.groupNumber}}</td>
-            <td>{{model.patientModel}}</td>
-            <td [title]="getTooltip(model.healingMethod)">{{model.healingMethod}}</td>
-            <td style="text-align: center; width: 80px" width="80px"><input clrInput type="number" step="100" (change)="calculateTable(false)" style="text-align: center; width: 80px" width="80px" [value]="model.summaryPatientsCount" [(ngModel)]="model.summaryPatientsCount"></td>
-            <td>
-              <ng-container *ngIf="model.countNeedToRA === -1">
-                <p>Не применимо</p>
-              </ng-container>
-              <ng-container *ngIf="model.countNeedToRA !== -1">
-                <input clrInput type="number" (change)="calculateTable(false)" step="10" [value]="model.countNeedToRA" style="text-align: center; width: 80px" [(ngModel)]="model.countNeedToRA">
-              </ng-container>
-            </td>
-            <td>{{model.tariff | number:'1.0-0'}}</td>
-            <td>
-              <ng-container *ngIf="model.lpu1withoutRotateAtr !== -1">
-                {{model.lpu1withoutRotateAtr | number:'1.0-0'}}
-              </ng-container>
-              <ng-container *ngIf="model.lpu1withoutRotateAtr === -1">
-                <p>Не применимо</p>
-              </ng-container>
-            </td>
-            <td>{{model.lpu1withRotateAtr | number:'1.0-0'}}</td>
-            <td>
-              <ng-container *ngIf="model.lpu2withoutRotateAtr !== -1">
-                {{model.lpu2withoutRotateAtr | number:'1.0-0'}}
-              </ng-container>
-              <ng-container *ngIf="model.lpu2withoutRotateAtr === -1">
-                <p>Не применимо</p>
-              </ng-container>
-            </td>
-            <td>{{model.lpu2withRotateAtr | number:'1.0-0'}}</td>
-            <td>{{model.summaryOutcomeForMaterials | number:'1.0-0'}}</td>
-            <td>{{model.budgetLpu | number:'1.0-0'}}</td>
-            <td>{{model.incomeLpu | number:'1.0-0'}}</td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <!-- <td></td> -->
-            <td>Итого</td>
-            <td>{{summary!.summaryOutcome | number:'1.0-0'}}</td>
-            <td>{{summary!.summaryBudget | number:'1.0-0'}}</td>
-            <td>{{summary!.summaryIncomeLpu | number:'1.0-0'}}</td>
-          </tr>
-          </tbody>
-        </table>
+
+<div id="printed-table">
+  <p #pdfHeader class="pdfHeader">
+    Результаты вычислений доходов и расходов МИС:
+  </p>
+
+  <ng-container *ngIf="!tariffsNotCalculated && !miPriceNotCalculated">
+    <div class="clr-row" style="margin: 2rem">
+      <div class="clr-col-6">
+        <div class="clr-row">
+          <table class="table">
+            <thead #tableHead>
+              <tr>
+                <th rowspan="2">{{ textGroupNumber }}</th>
+                <th rowspan="2">{{ textPatientModel }}</th>
+                <th rowspan="2">{{ textHealingMethod }}</th>
+                <th rowspan="2" width="80px">{{ textPatientsPerYear }}</th>
+                <th rowspan="2">{{ textPatientsNeedRA }}</th>
+                <th rowspan="2">{{ textTariffMinusSalary }}</th>
+                <th colspan="2">{{ textLPUCostsPerPatient }}</th>
+                <th colspan="2">{{ textLPUCostsAllPatients }}</th>
+                <th rowspan="2">{{ textTotalCosts }}</th>
+                <th rowspan="2">{{ textTFOMSBudget }}</th>
+                <th rowspan="2">{{ textLPUIncome }}</th>
+              </tr>
+              <tr>
+                <th>{{ textWithoutRA }}</th>
+                <th>{{ textWithRA }}</th>
+                <th>{{ textWithoutRA }}</th>
+                <th>{{ textWithRA }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let model of datasource">
+                <td>{{ model.groupNumber }}</td>
+                <td>{{ model.patientModel }}</td>
+                <td [title]="getTooltip(model.healingMethod)">
+                  {{ model.healingMethod }}
+                </td>
+                <td style="text-align: center; width: 80px" width="80px">
+                  <input
+                    clrInput
+                    type="number"
+                    step="100"
+                    (change)="calculateTable(false)"
+                    style="text-align: center; width: 80px"
+                    width="80px"
+                    [value]="model.summaryPatientsCount"
+                    [(ngModel)]="model.summaryPatientsCount"
+                  />
+                </td>
+                <td>
+                  <ng-container *ngIf="model.countNeedToRA === -1">
+                    <p>{{ textNotApplicable }}</p>
+                  </ng-container>
+                  <ng-container *ngIf="model.countNeedToRA !== -1">
+                    <input
+                      clrInput
+                      type="number"
+                      (change)="calculateTable(false)"
+                      step="10"
+                      [value]="model.countNeedToRA"
+                      style="text-align: center; width: 80px"
+                      [(ngModel)]="model.countNeedToRA"
+                    />
+                  </ng-container>
+                </td>
+                <td>{{ model.tariff | number : "1.0-0" }}</td>
+                <td>
+                  <ng-container *ngIf="model.lpu1withoutRotateAtr !== -1">
+                    {{ model.lpu1withoutRotateAtr | number : "1.0-0" }}
+                  </ng-container>
+                  <ng-container *ngIf="model.lpu1withoutRotateAtr === -1">
+                    <p>{{ textNotApplicable }}</p>
+                  </ng-container>
+                </td>
+                <td>{{ model.lpu1withRotateAtr | number : "1.0-0" }}</td>
+                <td>
+                  <ng-container *ngIf="model.lpu2withoutRotateAtr !== -1">
+                    {{ model.lpu2withoutRotateAtr | number : "1.0-0" }}
+                  </ng-container>
+                  <ng-container *ngIf="model.lpu2withoutRotateAtr === -1">
+                    <p>{{ textNotApplicable }}</p>
+                  </ng-container>
+                </td>
+                <td>{{ model.lpu2withRotateAtr | number : "1.0-0" }}</td>
+                <td>
+                  {{ model.summaryOutcomeForMaterials | number : "1.0-0" }}
+                </td>
+                <td>{{ model.budgetLpu | number : "1.0-0" }}</td>
+                <td>{{ model.incomeLpu | number : "1.0-0" }}</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{{ textTotal }}</td>
+                <td>{{ summary!.summaryOutcome | number : "1.0-0" }}</td>
+                <td>{{ summary!.summaryBudget | number : "1.0-0" }}</td>
+                <td>{{ summary!.summaryIncomeLpu | number : "1.0-0" }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="clr-row" style="margin: 2rem;  font-size: 20px; font-weight: bold;">
-    <div class="clr-col-6">
-      Общий размер дохода ЛПУ, руб.
+    <br />
+    <div
+      class="clr-row"
+      style="margin: 2rem; font-size: 20px; font-weight: bold"
+    >
+      <div class="clr-col-6">
+        {{ textTotalIncome }}
+      </div>
+      <div class="clr-col-6">
+        {{
+          summary!.summaryIncomeLpu.toLocaleString("ru-RU", {
+            useGrouping: true
+          })
+        }}
+      </div>
     </div>
-    <div class="clr-col-6">
-      <!-- {{summary!.summaryIncomeLpu | number:'1.0-0'}} -->
-      {{summary!.summaryIncomeLpu.toLocaleString('ru-RU', {useGrouping: true})}}
+    <div
+      class="clr-row"
+      style="margin: 2rem; font-size: 20px; font-weight: bold"
+    >
+      <div class="clr-col-6">
+        {{ textAdditionalPatients }}
+      </div>
+      <div class="clr-col-6">
+        {{ summary!.additionalPatients | number : "1.0-0" }}
+      </div>
     </div>
-  </div>
-  <div class="clr-row" style="margin: 2rem; font-size: 20px; font-weight: bold;">
-    <div class="clr-col-6">
-      Дополнительное число пациентов, которым можно провести ротационную атерэктомию в ходе ЧКВ с 1 стентом
-    </div>
-    <div class="clr-col-6">
-      {{summary!.additionalPatients | number:'1.0-0'}}
-      <!-- {{summary!.additionalPatients | number: '1.0-0'}} -->
-      <!-- {{summary!.additionalPatients.toLocaleString('ru-RU', {useGrouping: true})}} -->
-    </div>
-  </div>
-</ng-container>
-
-
-
-
+    <button class="btn btn-sm" (click)="printPdf(tableHead, pdfHeader)">
+      Распечатать PDF
+    </button>
+  </ng-container>
+</div>

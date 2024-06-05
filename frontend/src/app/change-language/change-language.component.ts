@@ -11,9 +11,10 @@ export class ChangeLanguageComponent {
   currentLanguage: string = "RU";
   @Output() languageChanged = new EventEmitter<string>();
 
-  constructor(private cdr: ChangeDetectorRef) {
+  constructor() {
     // При загрузке компонента проверяем наличие сохраненного языка в localStorage
     this.currentLanguage = localStorage.getItem('currentLanguage') || 'RU';
+    localStorage.setItem('currentLanguage', this.currentLanguage);
   }
 
   changeLanguage() {
@@ -22,8 +23,7 @@ export class ChangeLanguageComponent {
     localStorage.setItem('currentLanguage', this.currentLanguage);
     // Посылаем событие о смене языка
     this.languageChanged.emit(this.currentLanguage);
-    this.cdr.detectChanges(); // Добавьте эту строку
-  }
-}
+    window.location.reload();
+ }
 
-//123
+}

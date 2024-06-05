@@ -13,11 +13,15 @@ export class TarrifsService {
   }
 
   public loadRegions(): Observable<RegionsListResponse> {
-    return this._httpClient.get<RegionsListResponse>(`${this.BASE}/region_coefficients`);
+    let lang = localStorage.getItem("currentLanguage") === "RU" ? "ru-RU" : "en-US";
+    let options = {headers: {"Accept-Language": lang}}
+    return this._httpClient.get<RegionsListResponse>(`${this.BASE}/region_coefficients`, options);
   }
 
-  public loadTarrifs(region: string): Observable<TarrifTableResponseModel> {
-    return this._httpClient.get<TarrifTableResponseModel>(`${this.BASE}/get_tariff?region=${region}`);
+  public loadTarrifs(region: number): Observable<TarrifTableResponseModel> {
+    let lang = localStorage.getItem("currentLanguage") === "RU" ? "ru-RU" : "en-US";
+    let options = {headers: {"Accept-Language": lang}}
+    return this._httpClient.get<TarrifTableResponseModel>(`${this.BASE}/get_tariff?region_id=${region}`, options);
   }
 
 }

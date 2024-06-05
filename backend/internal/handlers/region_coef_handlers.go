@@ -9,13 +9,21 @@ import (
 	"gitlab.com/rotapro/backend/sqlite"
 )
 
+type RegionCoefResult struct {
+	ID int64 `json:"id"`
+	RegionCoef
+}
+
 type RegionCoef struct {
-	Region string  `json:"region" binding:"required,max=100"`
-	Coef   float64 `json:"coef" binding:"required,max=2147483647"`
+	Region string `json:"region" binding:"required,max=100"` // после типа данных указываются теги рефлексии,
+	// с их помощью можно выполнять какие-либо действия над полями структуры,
+	// например по тегу json пакеты сериализации понимают в ключ с каким имененем должно быть это значение в json
+	// binding тег нужен для задания валидации на поле, используется оберткой gin'а над пакетом validator
+	Coef float64 `json:"coef" binding:"required,max=2147483647"`
 }
 
 func GetRegionCoef(c *gin.Context) {
-	bt, err := sqlite.ExecuteWithResult(sqlite.GetAllRegionCoef)
+	bt, err := sqlite.ExecuteWithResult(sqlite.GetAllRegionCoef, utils.GetLanguage(c))
 	if err != nil {
 		utils.BindErrorMessageWithAbort(c, http.StatusInternalServerError, "cannot get data from db: "+err.Error())
 		return

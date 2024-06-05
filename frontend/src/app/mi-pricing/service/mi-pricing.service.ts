@@ -13,7 +13,9 @@ export class MiPricingService {
   }
 
   public calculateMi(data: MiForChkvTableModel): Observable<MiForChkvResultModel> {
-    return this._httpClient.post<MiForChkvResultModel>(`${this.BASE}/mi_cost`, data);
+    let lang = localStorage.getItem("currentLanguage") === "RU" ? "ru-RU" : "en-US";
+    let options = {headers: {"Accept-Language": lang}}
+    return this._httpClient.post<MiForChkvResultModel>(`${this.BASE}/mi_cost`, data, options);
   }
 
 }

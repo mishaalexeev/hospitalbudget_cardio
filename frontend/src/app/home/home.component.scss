@@ -1,21 +1,25 @@
 h1 {        
-    font-size: 30px;        
+    font-size: 40px;        /* Увеличено с 30px до 40px */
     font-weight: bold;        
     text-align: center;        
     margin-bottom: 20px;    
-    }        
-    a {        
-    font-size: 14px;        
+}        
+
+a {        
+    font-size: 18px;        /* Увеличено с 14px до 18px */
     line-height: 1.5;        
     color: #333;        
     text-decoration: none;        
     display: block;        
     margin-bottom: 10px;    
-    }         
-    a ol {        
+}         
+
+a ol {        
     margin-left: 20px;       
     margin-bottom: 10px;    
-    }        
-    a ol li {        
+}        
+
+a ol li {        
+    font-size: 18px;        /* Увеличено с 14px до 18px (если требуется) */
     margin-bottom: 5px;    
-    }
+}

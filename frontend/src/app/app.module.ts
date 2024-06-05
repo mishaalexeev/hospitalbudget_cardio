@@ -15,6 +15,7 @@ import { IncomesOutcomesComponent } from './incomes-outcomes/incomes-outcomes.co
 import { HomeComponent } from './home/home.component';
 import { CookieBannerComponent } from './cookie-banner/cookie-banner.component';
 import { ChangeLanguageComponent } from './change-language/change-language.component';
+// import { PrintResultsComponent } from './print-results/print-results.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ChangeLanguageComponent } from './change-language/change-language.compo
     IncomesOutcomesComponent,
     HomeComponent,
     CookieBannerComponent,
-    ChangeLanguageComponent
+    ChangeLanguageComponent,
+    // PrintResultsComponent
   ],
   imports: [
     BrowserModule,

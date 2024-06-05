@@ -1,15 +1,21 @@
-<app-change-language (languageChanged)="onLanguageChanged($event)"></app-change-language>
+<!-- <app-change-language
+  (languageChanged)="onLanguageChanged()"
+></app-change-language> -->
 <h1>{{ homeTitle }}</h1>
 
 <a>{{ toolDescription }}</a>
 <a></a>
-<a style="justify-content: space-evenly;">
-    {{ dataDescription }}
-    <ol>
-        <a [href]="governmentResolutionLink" target="_blank">{{ governmentResolutionText }}</a>
-        <a [href]="healthMinistryLetterLink" target="_blank">{{ healthMinistryLetterText }}</a>
-        <a>{{ tariffAgreementsText }}</a>
-    </ol>
+<a style="justify-content: space-evenly">
+  {{ dataDescription }}
+  <ol>
+    <a [href]="governmentResolutionLink" target="_blank">{{
+      governmentResolutionText
+    }}</a>
+    <a [href]="healthMinistryLetterLink" target="_blank">{{
+      healthMinistryLetterText
+    }}</a>
+    <a>{{ tariffAgreementsText }}</a>
+  </ol>
 
-    {{ afterProgramChanges }}
+  {{ afterProgramChanges }}
 </a>

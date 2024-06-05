@@ -1,5 +1,6 @@
 package sqlite
 
+// в файле хранятся различные квери которые используются для обращения в базу за данными
 const createRegionCoefTable = `
 	PRAGMA shrink_memory;
 	PRAGMA synchronous = OFF;
@@ -7,9 +8,21 @@ const createRegionCoefTable = `
 	CREATE TABLE IF NOT EXISTS region_coef
 	(
 		id          integer not null unique,
-		region      text    not null,
 		coef        integer not null,
 		CONSTRAINT kd_PK PRIMARY KEY (id)
+	);
+`
+
+const createRegionCoefTranslationTable = `
+	PRAGMA shrink_memory;
+	PRAGMA synchronous = OFF;
+
+	CREATE TABLE IF NOT EXISTS region_translation
+	(
+		id          integer not null unique,
+		region_ru   text    not null,
+    	region_en   text    not null,
+    	CONSTRAINT 	rt_PK PRIMARY KEY (id)
 	);
 `
 
@@ -19,29 +32,50 @@ const createMedicalSupportTable = `
 
 	CREATE TABLE IF NOT EXISTS ht_med_sup
 	(
-		id           	integer not null unique,
-		medical_group   text    not null,
-		fin_cost_std 	integer not null,
-		wage_share   	integer not null,
-		CONSTRAINT   	kd_PK PRIMARY KEY (id)
+		id           		integer not null unique,
+		medical_group   	text    not null,
+		medical_group_en	text    not null,
+		fin_cost_std 		integer not null,
+		wage_share   		integer not null,
+		CONSTRAINT   		kd_PK PRIMARY KEY (id)
 	);
 `
 
 const (
-	GetAllRegionCoef = `SELECT json_group_array(json_object('region', region, 'coef', coef)) FROM region_coef`
-	GetCoefByRegion  = `SELECT json_object('region', region, 'coef', coef) from region_coef WHERE region = ?`
+	GetAllRegionCoef = `SELECT
+    	json_group_array(json_object(
+    	        'id', rc.id,
+    	        'region', CASE WHEN ? IS 'ru-RU' THEN rt.region_ru ELSE rt.region_en END,
+    	        'coef', rc.coef
+    	                 )) AS region_coef
+		FROM
+    	region_coef rc
+    	    JOIN
+    	region_translation rt ON rc.id = rt.id`
+
+	GetCoefByRegion = `SELECT json_object(
+               'id', rc.id,
+               'region', CASE WHEN ? IS 'ru-RU' THEN rt.region_ru ELSE rt.region_en END,
+               'coef', coef
+        ) AS region_coef
+		FROM region_coef rc
+		         JOIN region_translation rt ON rc.id = rt.id
+		WHERE rc.id = ?`
+
 	UpdateRegionCoef = `UPDATE region_coef SET coef = ? WHERE region = ?`
 	InsertRegionCoef = `INSERT INTO region_coef(region, coef) VALUES (?, ?)`
 
 	GetMedicalSupport = `SELECT json_group_array(json_object(
-    	'medical_group', medical_group,
+		'id', id,
+    	'medical_group', CASE WHEN ? IS 'ru-RU' THEN medical_group ELSE medical_group_en END,
 		'fin_cost_std', fin_cost_std,
 		'wage_share', wage_share
 	)) FROM ht_med_sup`
-	UpdateMedicalSupport = `UPDATE ht_med_sup SET fin_cost_std = ?, wage_share = ? WHERE medical_group = ?`
-	InsertMedicalSupport = `INSERT INTO ht_med_sup(medical_group, fin_cost_std, wage_share) VALUES (?, ?, ?)`
+	UpdateMedicalSupport = `UPDATE ht_med_sup SET medical_group = ?, medical_group_en = ?, fin_cost_std = ?, wage_share = ? WHERE id = ?`
+	InsertMedicalSupport = `INSERT INTO ht_med_sup(medical_group, medical_group_en, fin_cost_std, wage_share) VALUES (?, ?, ?, ?)`
 )
 
+// таблица коэффициентов из экселя, нужна была для ввода значений в базу
 var kdMap = map[string]float64{
 	"Алтайский край":                           1.147,
 	"Амурская область":                         1.397,

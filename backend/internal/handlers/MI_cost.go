@@ -43,9 +43,11 @@ func GetMiCost(c *gin.Context) {
 		return
 	}
 
+	// создаем структуру ответа
 	response := miCostResponse{
 		RotaPro: data.RotaProCost,
 	}
+	// считаем по формуле из экселя
 	oneStent := data.Stent +
 		data.Introducer +
 		data.DiagnosticCatheter +
@@ -56,17 +58,34 @@ func GetMiCost(c *gin.Context) {
 	twoStent := oneStent + data.Stent + data.PredilatoryBalloon + data.PostdilatoryBalloon
 	threeStent := oneStent + (data.Stent+data.PostdilatoryBalloon+data.PredilatoryBalloon)*2
 
-	response.MiCostData = []treatmentCost{
-		{Name: "с 1 стентом", CKV: oneStent, CKVPA: oneStent + data.RotaProCost},
-		{Name: "с 2 стентами", CKV: twoStent, CKVPA: twoStent + data.RotaProCost},
-		{Name: "с 3 стентами", CKV: threeStent, CKVPA: threeStent + data.RotaProCost},
-		{Name: "ВСУЗИ с 1 стентом", CKV: oneStent + data.VSUZIConductor, CKVPA: oneStent + data.VSUZIConductor + data.RotaProCost},
-		{Name: "ВСУЗИ с 2 стентами", CKV: twoStent + data.VSUZIConductor, CKVPA: twoStent + data.VSUZIConductor + data.RotaProCost},
-		{Name: "ВСУЗИ с 3 стентами", CKV: threeStent + data.VSUZIConductor, CKVPA: threeStent + data.VSUZIConductor + data.RotaProCost},
-		{Name: "ОКТ с 1 стентом", CKV: oneStent + data.OKTConductor, CKVPA: oneStent + data.OKTConductor + data.RotaProCost},
-		{Name: "ОКТ с 2 стентами", CKV: twoStent + data.OKTConductor, CKVPA: twoStent + data.OKTConductor + data.RotaProCost},
-		{Name: "ОКТ с 3 стентами", CKV: threeStent + data.OKTConductor, CKVPA: threeStent + data.OKTConductor + data.RotaProCost},
+	if lang := utils.GetLanguage(c); lang != utils.DefaultLanguage {
+		response.MiCostData = []treatmentCost{
+			{Name: "1 stent", CKV: oneStent, CKVPA: oneStent + data.RotaProCost},
+			{Name: "2 stents", CKV: twoStent, CKVPA: twoStent + data.RotaProCost},
+			{Name: "3 stents", CKV: threeStent, CKVPA: threeStent + data.RotaProCost},
+			{Name: "IVUS + 1 stent", CKV: oneStent + data.VSUZIConductor, CKVPA: oneStent + data.VSUZIConductor + data.RotaProCost},
+			{Name: "IVUS + 2 stents", CKV: twoStent + data.VSUZIConductor, CKVPA: twoStent + data.VSUZIConductor + data.RotaProCost},
+			{Name: "IVUS + 3 stents", CKV: threeStent + data.VSUZIConductor, CKVPA: threeStent + data.VSUZIConductor + data.RotaProCost},
+			{Name: "OCT + 1 stent", CKV: oneStent + data.OKTConductor, CKVPA: oneStent + data.OKTConductor + data.RotaProCost},
+			{Name: "OCT + 2 stents", CKV: twoStent + data.OKTConductor, CKVPA: twoStent + data.OKTConductor + data.RotaProCost},
+			{Name: "OCT + 3 stents", CKV: threeStent + data.OKTConductor, CKVPA: threeStent + data.OKTConductor + data.RotaProCost},
+		}
+	} else {
+		response.MiCostData = []treatmentCost{
+			{Name: "с 1 стентом", CKV: oneStent, CKVPA: oneStent + data.RotaProCost},
+			{Name: "с 2 стентами", CKV: twoStent, CKVPA: twoStent + data.RotaProCost},
+			{Name: "с 3 стентами", CKV: threeStent, CKVPA: threeStent + data.RotaProCost},
+			{Name: "ВСУЗИ с 1 стентом", CKV: oneStent + data.VSUZIConductor, CKVPA: oneStent + data.VSUZIConductor + data.RotaProCost},
+			{Name: "ВСУЗИ с 2 стентами", CKV: twoStent + data.VSUZIConductor, CKVPA: twoStent + data.VSUZIConductor + data.RotaProCost},
+			{Name: "ВСУЗИ с 3 стентами", CKV: threeStent + data.VSUZIConductor, CKVPA: threeStent + data.VSUZIConductor + data.RotaProCost},
+			{Name: "ОКТ с 1 стентом", CKV: oneStent + data.OKTConductor, CKVPA: oneStent + data.OKTConductor + data.RotaProCost},
+			{Name: "ОКТ с 2 стентами", CKV: twoStent + data.OKTConductor, CKVPA: twoStent + data.OKTConductor + data.RotaProCost},
+			{Name: "ОКТ с 3 стентами", CKV: threeStent + data.OKTConductor, CKVPA: threeStent + data.OKTConductor + data.RotaProCost},
+		}
 	}
+
 	response.RAWithThreeStents = int64(float64(oneStent) + float64(data.Stent+data.PredilatoryBalloon+data.PostdilatoryBalloon)*rotaProCoef + float64(data.RotaProCost))
+	// отдает ответ в виде json
+	// JSON serializes the given struct as JSON into the response body. It also sets the Content-Type as "application/ json".
 	c.JSON(http.StatusOK, response)
 }

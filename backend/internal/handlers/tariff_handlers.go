@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"net/http"
-	"strings"
+	"strconv"
 
 	"gitlab.com/rotapro/backend/internal/utils"
 	"gitlab.com/rotapro/backend/sqlite"
@@ -11,30 +11,37 @@ import (
 	jsoniter "github.com/json-iterator/go"
 )
 
+// здесь ничего нового, работа с бд и пересчет данных по формулам из экселя
+
 type Tariff struct {
 	MedicalSupport
 	Coef  float64 `json:"coef"`
 	Tarif int64   `json:"tarif"`
 }
 
-func GetTarif(c *gin.Context) {
-	region, ok := c.GetQuery("region")
+func GetTariff(c *gin.Context) {
+	regionstr, ok := c.GetQuery("region_id")
 	if !ok {
 		utils.BindErrorMessageWithAbort(c, http.StatusUnprocessableEntity, "cannot get region from query")
 		return
 	}
-	result, err := sqlite.ExecuteWithResult(sqlite.GetCoefByRegion, region)
+	regionID, err := strconv.ParseInt(regionstr, 10, 64)
+	if err != nil {
+		utils.BindErrorMessageWithAbort(c, http.StatusInternalServerError, "cannot parse region from query")
+		return
+	}
+	result, err := sqlite.ExecuteWithResult(sqlite.GetCoefByRegion, utils.GetLanguage(c), regionID)
 	if err != nil {
 		utils.BindErrorMessageWithAbort(c, http.StatusInternalServerError, "cannot get coef from database with provided region, err: "+err.Error())
 		return
 	}
-	var regionCoef RegionCoef
+	var regionCoef RegionCoefResult
 	if err = jsoniter.Unmarshal(result, &regionCoef); err != nil {
 		utils.BindErrorMessageWithAbort(c, http.StatusInternalServerError, "cannot unmarshal region coef, err: "+err.Error())
 		return
 	}
 
-	result, err = sqlite.ExecuteWithResult(sqlite.GetMedicalSupport)
+	result, err = sqlite.ExecuteWithResult(sqlite.GetMedicalSupport, utils.GetLanguage(c))
 	if err != nil {
 		utils.BindErrorMessageWithAbort(c, http.StatusInternalServerError, "cannot get data from db: "+err.Error())
 		return
@@ -46,6 +53,8 @@ func GetTarif(c *gin.Context) {
 		return
 	}
 
+	const moscowID = 20
+
 	const group43 = 9599.28
 	const group44 = 9983.05
 	const group45 = 11716.3
@@ -55,23 +64,23 @@ func GetTarif(c *gin.Context) {
 	tarifs := make([]Tariff, len(medicalSup))
 	for i := range medicalSup {
 		tarif := getTarif(float64(medicalSup[i].FinCostStd), float64(medicalSup[i].WageShare), regionCoef.Coef)
-		if region == "Москва" {
-			if strings.Contains(medicalSup[i].MedicalGroup, "43 гр.") {
+		if regionID == moscowID {
+			if medicalSup[i].ID == 1 {
 				tarif += group43
 			}
-			if strings.Contains(medicalSup[i].MedicalGroup, "44 гр.") {
+			if medicalSup[i].ID == 2 {
 				tarif += group44
 			}
-			if strings.Contains(medicalSup[i].MedicalGroup, "45 гр.") {
+			if medicalSup[i].ID == 3 {
 				tarif += group45
 			}
-			if strings.Contains(medicalSup[i].MedicalGroup, "46 гр.") {
+			if medicalSup[i].ID == 4 {
 				tarif += group46
 			}
-			if strings.Contains(medicalSup[i].MedicalGroup, "47 гр.") {
+			if medicalSup[i].ID == 5 {
 				tarif += group47
 			}
-			if strings.Contains(medicalSup[i].MedicalGroup, "48 гр.") {
+			if medicalSup[i].ID == 6 {
 				tarif += group48
 			}
 		}

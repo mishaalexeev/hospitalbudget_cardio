@@ -3,193 +3,302 @@
     <div class="clr-row">
       <table class="table">
         <thead>
-        <tr>
-          <th>Медицинские изделия (МИ) для чрескожного коронарного вмешательства (ЧКВ)</th>
-          <th>руб.</th>
-        </tr>
+          <tr>
+            <th>{{ textMIforCHKVHeader }}</th>
+            <th>{{ textCurrency }}</th>
+          </tr>
         </thead>
         <tbody>
-        <tr>
-          <td style="vertical-align: middle;">Стент</td>
-          <td style="margin-top: 0!important;">
-            <input clrInput type="number" (change)="setStorage()" step="100" name="input" style="text-align: center" [(ngModel)]="miForChvkDataSource.stent">
-          </td>
-        </tr>
-        <tr>
-          <td style="vertical-align: middle;">Интродьюсер</td>
-          <td>
-            <input clrInput type="number" (change)="setStorage()" step="100" name="input" style="text-align: center" [(ngModel)]="miForChvkDataSource.introducer">
-          </td>
-        </tr>
-        <tr>
-          <td style="vertical-align: middle;">Диагностический катетер</td>
-          <td>
-            <input clrInput type="number" (change)="setStorage()" step="100" name="input" style="text-align: center" [(ngModel)]="miForChvkDataSource.diagnostic_catheter">
-          </td>
-        </tr>
-        <tr>
-          <td style="vertical-align: middle;">Проводниковый катетер</td>
-          <td>
-            <input clrInput type="number" (change)="setStorage()" step="100" name="input" style="text-align: center" [(ngModel)]="miForChvkDataSource.guide_catheter">
-          </td>
-        </tr>
-        <tr>
-          <td style="vertical-align: middle;">Проводник</td>
-          <td>
-            <input clrInput type="number" (change)="setStorage()" step="100" name="input" style="text-align: center" [(ngModel)]="miForChvkDataSource.guide">
-          </td>
-        </tr>
-        <tr>
-          <td style="vertical-align: middle;">Баллон предилятационный</td>
-          <td>
-            <input clrInput type="number" (change)="setStorage()" step="100" name="input" style="text-align: center" [(ngModel)]="miForChvkDataSource.predilatory_balloon">
-          </td>
-        </tr>
-        <tr>
-          <td style="vertical-align: middle;">Баллон постдилятационный</td>
-          <td>
-            <input clrInput type="number" (change)="setStorage()" step="100" name="input" style="text-align: center" [(ngModel)]="miForChvkDataSource.postdilatory_balloon">
-          </td>
-        </tr>
-        <tr>
-          <td style="vertical-align: middle;">Проводник для ВСУЗИ</td>
-          <td>
-            <input clrInput type="number" (change)="setStorage()" step="100" name="input" style="text-align: center" [(ngModel)]="miForChvkDataSource.vsuzi_conductor">
-          </td>
-        </tr>
-        <tr>
-          <td style="vertical-align: middle;">Проводник для ОКТ</td>
-          <td>
-            <input clrInput type="number" (change)="setStorage()" step="100" name="input" style="text-align: center" [(ngModel)]="miForChvkDataSource.okt_conductor">
-          </td>
-        </tr>
+          <tr>
+            <td style="vertical-align: middle">{{ textStent }}</td>
+            <td style="margin-top: 0 !important">
+              <input
+                clrInput
+                type="number"
+                (change)="setStorage()"
+                step="100"
+                name="input"
+                style="text-align: center"
+                [(ngModel)]="miForChvkDataSource.stent"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: middle">{{ textIntroducer }}</td>
+            <td>
+              <input
+                clrInput
+                type="number"
+                (change)="setStorage()"
+                step="100"
+                name="input"
+                style="text-align: center"
+                [(ngModel)]="miForChvkDataSource.introducer"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: middle">{{ textDiagnosticCatheter }}</td>
+            <td>
+              <input
+                clrInput
+                type="number"
+                (change)="setStorage()"
+                step="100"
+                name="input"
+                style="text-align: center"
+                [(ngModel)]="miForChvkDataSource.diagnostic_catheter"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: middle">{{ textGuideCatheter }}</td>
+            <td>
+              <input
+                clrInput
+                type="number"
+                (change)="setStorage()"
+                step="100"
+                name="input"
+                style="text-align: center"
+                [(ngModel)]="miForChvkDataSource.guide_catheter"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: middle">{{ textGuide }}</td>
+            <td>
+              <input
+                clrInput
+                type="number"
+                (change)="setStorage()"
+                step="100"
+                name="input"
+                style="text-align: center"
+                [(ngModel)]="miForChvkDataSource.guide"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: middle">{{ textPredilatoryBalloon }}</td>
+            <td>
+              <input
+                clrInput
+                type="number"
+                (change)="setStorage()"
+                step="100"
+                name="input"
+                style="text-align: center"
+                [(ngModel)]="miForChvkDataSource.predilatory_balloon"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: middle">{{ textPostdilatoryBalloon }}</td>
+            <td>
+              <input
+                clrInput
+                type="number"
+                (change)="setStorage()"
+                step="100"
+                name="input"
+                style="text-align: center"
+                [(ngModel)]="miForChvkDataSource.postdilatory_balloon"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: middle">{{ textVSUZIConductor }}</td>
+            <td>
+              <input
+                clrInput
+                type="number"
+                (change)="setStorage()"
+                step="100"
+                name="input"
+                style="text-align: center"
+                [(ngModel)]="miForChvkDataSource.vsuzi_conductor"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: middle">{{ textOKTConductor }}</td>
+            <td>
+              <input
+                clrInput
+                type="number"
+                (change)="setStorage()"
+                step="100"
+                name="input"
+                style="text-align: center"
+                [(ngModel)]="miForChvkDataSource.okt_conductor"
+              />
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
     <div class="clr-row">
       <table class="table">
         <thead>
-        <tr>
-          <th style="vertical-align: middle;">МИ для ротационной атерэктомии (РА)</th>
-          <th>руб.</th>
-        </tr>
+          <tr>
+            <th style="vertical-align: middle">{{ textMIforRAHeader }}</th>
+            <th>{{ textCurrency }}</th>
+          </tr>
         </thead>
         <tbody>
-        <tr>
-          <td style="vertical-align: middle;">Проводник для бура</td>
-          <td>
-            <input clrInput type="number" (change)="setStorage()" step="100" name="input" style="text-align: center" [(ngModel)]="miForChvkDataSource.conductor">
-          </td>
-        </tr>
-        <tr>
-          <td style="vertical-align: middle;">Бур с эдвансером</td>
-          <td>
-            <input clrInput type="number" (change)="setStorage()" step="100" name="input" style="text-align: center" [(ngModel)]="miForChvkDataSource.drill_advance">
-          </td>
-        </tr>
+          <tr>
+            <td style="vertical-align: middle">{{ textDrillConductor }}</td>
+            <td>
+              <input
+                clrInput
+                type="number"
+                (change)="setStorage()"
+                step="100"
+                name="input"
+                style="text-align: center"
+                [(ngModel)]="miForChvkDataSource.conductor"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: middle">{{ textDrillAdvance }}</td>
+            <td>
+              <input
+                clrInput
+                type="number"
+                (change)="setStorage()"
+                step="100"
+                name="input"
+                style="text-align: center"
+                [(ngModel)]="miForChvkDataSource.drill_advance"
+              />
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
     <div class="clr-row">
       <table class="table">
         <thead>
-        <tr>
-          <th>Средняя частота использования двух буров на 1 пациента</th>
-          <th>%</th>
-        </tr>
+          <tr>
+            <th>{{ textTwoDrillsFrequency }}</th>
+            <th>%</th>
+          </tr>
         </thead>
         <tbody>
-        <tr>
-          <td><input type="range" (change)="setStorage()" clrRange name="two" style="text-align: center" [(ngModel)]="sliderCost" (change)="costSliderChange($event)" max="30"/></td>
-          <td>
-            {{sliderCost}}
-          </td>
-        </tr>
+          <tr>
+            <td>
+              <input
+                type="range"
+                (change)="setStorage()"
+                clrRange
+                name="two"
+                style="text-align: center"
+                [(ngModel)]="sliderCost"
+                (change)="costSliderChange($event)"
+                max="30"
+              />
+            </td>
+            <td>{{ sliderCost }}</td>
+          </tr>
         </tbody>
       </table>
     </div>
     <div class="clr-row">
       <table class="table">
         <thead>
-        <tr>
-          <th>Стоимость РА для проведения ЧКВ</th>
-          <th>руб.</th>
-        </tr>
+          <tr>
+            <th>{{ textRAforCHKVHeader }}</th>
+            <th>{{ textCurrency }}</th>
+          </tr>
         </thead>
         <tbody>
-        <tr>
-          <td style="vertical-align: middle;">Ротационная атерэктомия</td>
-          <td>
-            {{miForChvkDataSource.rota_pro_cost | round}}
-          </td>
-        </tr>
+          <tr>
+            <td style="vertical-align: middle">{{ textRA }}</td>
+            <td>{{ miForChvkDataSource.rota_pro_cost | round }}</td>
+          </tr>
         </tbody>
       </table>
     </div>
   </div>
   <div class="clr-col-6">
-
     <table class="table">
       <thead>
-      <tr>
-        <th style="vertical-align: middle;">Средняя частота использования метода визуализации</th>
-        <th>%</th>
-      </tr>
+        <tr>
+          <th style="vertical-align: middle">{{ textVisualizationFrequency }}</th>
+          <th>%</th>
+        </tr>
       </thead>
       <tbody>
         <tr>
-          <td style="vertical-align: middle;">ВСУЗИ</td>
+          <td style="vertical-align: middle">{{ textVSUZI }}</td>
           <td>
-            <input clrInput type="number" (input)="updateValues()" step="1" name="input" style="text-align: center" [(ngModel)]="defaultPercentage" max="100">
+            <input
+              clrInput
+              type="number"
+              (input)="updateValues()"
+              step="1"
+              name="input"
+              style="text-align: center"
+              [(ngModel)]="defaultPercentage"
+              max="100"
+            />
           </td>
         </tr>
         <tr>
-          <td style="vertical-align: middle;">ОКТ</td>
+          <td style="vertical-align: middle">{{ textOKT }}</td>
           <td>
-            <input clrInput type="number" (input)="updateValues()" step="1" name="input" style="text-align: center" [(ngModel)]="100 - defaultPercentage" max="100">
+            <input
+              clrInput
+              type="number"
+              (input)="updateValues()"
+              step="1"
+              name="input"
+              style="text-align: center"
+              [(ngModel)]="100 - defaultPercentage"
+              max="100"
+            />
           </td>
         </tr>
       </tbody>
     </table>
 
-    <h3 style="font-size: 20px;">Стоимость МИ для проведения ЧКВ, руб.</h3>
+    <h3 style="font-size: 20px">{{ textMICostHeader }}</h3>
     <table class="table">
       <thead>
-      <tr>
-        <th>Метод лечения</th>
-        <th>ЧКВ, руб</th>
-        <th>ЧКВ+РА, руб</th>
-      </tr>
+        <tr>
+          <th>{{ textTreatmentMethod }}</th>
+          <th>{{ textCHKV }}</th>
+          <th>{{ textCHKVRA }}</th>
+        </tr>
       </thead>
       <tbody *ngIf="!loadingTable">
         <tr *ngFor="let data of miForChvkResultDataSource.mi_cost_data">
-          <td style="text-align: left">{{data.name}}</td>
-          <td>{{data.ckv}}</td>
-          <td>{{data.ckvpa}}</td>
+          <td style="text-align: left">{{ data.name }}</td>
+          <td>{{ data.ckv }}</td>
+          <td>{{ data.ckvpa }}</td>
         </tr>
       </tbody>
     </table>
     <table class="table" *ngIf="!loadingTable">
       <thead>
-      <tr>
-        <th>РА с 1-3 стентами*</th>
-        <th>{{miForChvkResultDataSource.ra_with_three_stents}}</th>
-      </tr>
+        <tr>
+          <th>{{ textRAwithThreeStents }}</th>
+          <th>{{ miForChvkResultDataSource.ra_with_three_stents }}</th>
+        </tr>
       </thead>
     </table>
     <ng-container *ngIf="loadingTable">
       <div class="clr-row">
-        <span class="spinner" style="margin-left: 50%">
-          Loading...
-        </span>
+        <span class="spinner" style="margin-left: 50%">Loading...</span>
       </div>
     </ng-container>
     <ng-container *ngIf="miForChvkResultDataSource.mi_cost_data.length < 1 && !loadingTable">
       <div class="clr-row" style="text-align: center">
-        <h4 style="width: 100%">Данные не загружены</h4>
+        <h4 style="width: 100%">{{ textDataNotLoaded }}</h4>
       </div>
     </ng-container>
   </div>
-  <button (click)="sendData()" class="btn btn-primary">Произвести расчет</button>
+  <button (click)="sendData()" class="btn btn-primary">{{ textCalculate }}</button>
 </div>
-

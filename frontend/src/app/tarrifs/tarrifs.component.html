@@ -1,77 +1,96 @@
 <div class="clr-row" style="margin: 2rem">
   <div class="clr-col-4">
     <div class="clr-row">
-      <clr-combobox name="regions" [(ngModel)]="pickedRegion" placeholder="Выберите регион" [clrLoading]="loadingRegions">
+      <clr-combobox
+        name="regions"
+        [(ngModel)]="displayPickedRegion"
+        [placeholder]="'Выберите регион'"
+        [clrLoading]="loadingRegions"
+      >
         <clr-options>
-          <clr-option *ngFor="let region of regions.data"
-                      name="reg"
-                      [clrValue]="region.region"
-                      ngDefaultControl
-                      (click)="changeRegions()"
-                      (clrInputChange)="changeRegions()">
-            {{region.region}}
+          <clr-option
+            *ngFor="let region of regions.data"
+            name="reg"
+            [clrValue]="region.region"
+            ngDefaultControl
+            (click)="changeRegions(region)"
+            (clrInputChange)="changeRegions(region)"
+          >
+            {{ region.region }}
           </clr-option>
         </clr-options>
       </clr-combobox>
     </div>
-    <div class="clr-row" style="margin-left: 1%" style="text-align: center">
-      <p>Коэффициент дифференциации: {{getKdFromRegion()}}
-        <a role="tooltip" aria-haspopup="true" class="tooltip tooltip-sm tooltip-top-right">
-          <cds-icon shape="info-circle" size="24"></cds-icon>
-          <span class="tooltip-content">Значение КД влияет на размер тарифа.</span>
-        </a>
-      </p>
-    </div>
-    <div class="clr-row" style="margin-left: 1%" style="text-align: center">
-      <ng-container>
-        <div class="clr-row">
-          <p>Заработная плата и прочие расходы: {{salaryAndOthers}}%
-            <a role="tooltip" aria-haspopup="true" class="tooltip tooltip-sm tooltip-top-right">
-              <cds-icon shape="info-circle" size="24"></cds-icon>
-              <span class="tooltip-content">Доля на заработную плату (ДЗП) и пр.расходы вычитается из тарифа.</span>
-            </a>
-          </p>
-        </div>
-        <div class="clr-row">
-          <input type="range" (change)="setStorage()" clrRange name="two" [(ngModel)]="salaryAndOthers" (change)="calculateTarifMinusSalaryAndOthers()"/>
-        </div>
-      </ng-container>
+    <div
+      class="clr-row"
+      style="flex-direction: column; align-items: flex-start; margin-left: 1%"
+    >
+      <div class="clr-row" style="margin-bottom: 0.5rem">
+        <p>
+          {{ textKoeffDiff }} {{ getKdFromRegion() }}
+          <a
+            role="tooltip"
+            aria-haspopup="true"
+            class="tooltip tooltip-sm tooltip-top-right"
+          >
+            <cds-icon shape="info-circle" size="24"></cds-icon>
+            <span class="tooltip-content"
+              >{{textKoeffDiffInfo}}</span
+            >
+          </a>
+        </p>
+      </div>
+      <div class="clr-row" style="margin-bottom: 0.5rem">
+        <p>
+          {{textZP}} {{ salaryAndOthers }}%
+          <a
+            role="tooltip"
+            aria-haspopup="true"
+            class="tooltip tooltip-sm tooltip-top-right"
+          >
+            <cds-icon shape="info-circle" size="24"></cds-icon>
+            <span class="tooltip-content"
+              >{{textZPInfo}}</span
+            >
+          </a>
+        </p>
+      </div>
+      <div class="clr-row" style="margin-bottom: 1rem">
+        <input
+          type="range"
+          (change)="setStorage()"
+          clrRange
+          name="two"
+          [(ngModel)]="salaryAndOthers"
+          (change)="calculateTarifMinusSalaryAndOthers()"
+        />
+      </div>
     </div>
     <div class="clr-row" style="margin-top: 2rem">
-      <button class="btn btn-primary" [disabled]="pickedRegion === null" (click)="loadTarrifs()">Рассчитать тариф</button>
+      <button
+        class="btn btn-primary"
+        [disabled]="pickedRegion === null"
+        (click)="loadTarrifs()"
+      >
+        {{textButtonCount}}
+      </button>
     </div>
   </div>
   <div class="clr-col-8">
     <div class="clr-row">
       <table class="table">
         <thead>
-        <tr>
-          <th>Группа ВМП</th>
-<!--          <th>-->
-<!--            НФЗ-->
-<!--            <a role="tooltip" aria-haspopup="true" class="tooltip tooltip-sm tooltip-top-right">-->
-<!--              <cds-icon shape="info-circle" size="24"></cds-icon>-->
-<!--              <span class="tooltip-content">Норматив финансовых затрат</span>-->
-<!--            </a>-->
-<!--          </th>-->
-<!--          <th>-->
-<!--            ДЗП-->
-<!--            <a role="tooltip" aria-haspopup="true" class="tooltip tooltip-sm tooltip-top-right">-->
-<!--              <cds-icon shape="info-circle" size="24"></cds-icon>-->
-<!--              <span class="tooltip-content">Доля заработной платы</span>-->
-<!--            </a>-->
-<!--          </th>-->
-          <th>Тариф, руб</th>
-          <th>Тариф за вычетом ДЗП и пр.расходов, руб.</th>
-        </tr>
+          <tr>
+            <th>{{ textGroupVMP }}</th>
+            <th>{{ textTarrif }}</th>
+            <th>{{ textTarrifMinusDZP }}</th>
+          </tr>
         </thead>
         <tbody *ngIf="!loadingTable">
           <tr *ngFor="let tarrif of tarrifDatasource.data">
-            <td style="text-align: left">{{tarrif.medical_group}}</td>
-<!--            <td>{{tarrif.fin_cost_std}}</td>-->
-<!--            <td>{{tarrif.wage_share}}</td>-->
-            <td>{{tarrif.tarif}}</td>
-            <td>{{tarrif.calculated | round}}</td>
+            <td style="text-align: left">{{ tarrif.medical_group }}</td>
+            <td>{{ tarrif.tarif }}</td>
+            <td>{{ tarrif.calculated | round }}</td>
           </tr>
         </tbody>
       </table>
@@ -83,9 +102,7 @@
     </ng-container>
     <ng-container *ngIf="loadingTable">
       <div class="clr-row">
-        <span class="spinner" style="margin-left: 50%">
-          Loading...
-        </span>
+        <span class="spinner" style="margin-left: 50%"> Loading... </span>
       </div>
     </ng-container>
   </div>
