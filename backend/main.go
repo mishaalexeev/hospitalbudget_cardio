@@ -5,9 +5,9 @@ import (
 	"os"
 	"reflect"
 
-	"gitlab.com/rotapro/backend/internal/handlers"
-	"gitlab.com/rotapro/backend/internal/utils"
-	"gitlab.com/rotapro/backend/sqlite"
+	"github.com/mishaalexeev/hospitalbudget_cardio/backend/internal/handlers"
+	"github.com/mishaalexeev/hospitalbudget_cardio/backend/internal/utils"
+	"github.com/mishaalexeev/hospitalbudget_cardio/backend/sqlite"
 
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
