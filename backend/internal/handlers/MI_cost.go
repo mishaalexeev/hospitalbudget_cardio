@@ -3,7 +3,7 @@ package handlers
 import (
 	"net/http"
 
-	"gitlab.com/rotapro/backend/internal/utils"
+	"github.com/mishaalexeev/hospitalbudget_cardio/backend/internal/utils"
 
 	"github.com/gin-gonic/gin"
 )
