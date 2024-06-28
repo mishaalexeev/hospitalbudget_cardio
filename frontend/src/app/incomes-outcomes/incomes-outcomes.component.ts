@@ -23,6 +23,7 @@ const RU_TEXTS = {
     'ишемическая болезнь сердца',
     'ишемическая болезнь сердца',
     'ишемическая болезнь сердца',
+    'ИБС со стенотическим или окклюзионным поражением коронарных артерий',
   ],
   healMethods: [
     'баллонная вазодилатация с установкой 1 стента в сосуд (сосуды)',
@@ -37,6 +38,7 @@ const RU_TEXTS = {
     'баллонная вазодилятация и (или) стентирование с установкой 1 стента в сосуд с применением методов внутрисосудистой визуализации*',
     'баллонная вазодилятация и (или) стентирование с установкой 2 стентов в сосуд с применением методов внутрисосудистой визуализации*',
     'баллонная вазодилятация и (или) стентирование с установкой 3 стента в сосуд с применением методов внутрисосудистой визуализации*',
+    'ротационная коронарная атерэктомия, баллонная вазодилятация с установкой 1-3 стентов в коронарные артерии',
   ],
 };
 
@@ -54,6 +56,7 @@ const EN_TEXTS = {
     'ischemic heart disease',
     'ischemic heart disease',
     'ischemic heart disease',
+    'ischemic heart disease with stenotic or occlusive lesions of the coronary arteries',
   ],
   healMethods: [
     'balloon angioplasty with placement of 1 stent in the vessel (vessels)',
@@ -65,9 +68,10 @@ const EN_TEXTS = {
     'balloon angioplasty with placement of 1 stent in the vessel',
     'balloon angioplasty with placement of 2 stents in the vessel (vessels)',
     'balloon angioplasty with placement of 3 stents in the vessel (vessels)',
-    'balloon angioplasty and/or stenting with placement of 1 stent in the vessel using intravascular visualization methods*',
-    'balloon angioplasty and/or stenting with placement of 2 stents in the vessel using intravascular visualization methods*',
-    'balloon angioplasty and/or stenting with placement of 3 stents in the vessel using intravascular visualization methods*',
+    'balloon angioplasty and/or stenting with placement of 1 stent in the vessel using intravascular visualization methods',
+    'balloon angioplasty and/or stenting with placement of 2 stents in the vessel using intravascular visualization methods',
+    'balloon angioplasty and/or stenting with placement of 3 stents in the vessel using intravascular visualization methods',
+    'rotational coronary atherectomy, balloon vasodilation with the placement of 1-3 stents in the coronary arteries',
   ],
 };
 
@@ -294,6 +298,7 @@ export class IncomesOutcomesComponent implements OnInit {
         this.calculateOvers(incomesOutcomesModel);
       }
     }
+    // ГРУППА 60
     if (firstTime) {
       let tariffData = this.tariffs!.data[this.tariffs!.data.length - 1];
       let tariff: number = tariffData.calculated;
@@ -304,10 +309,12 @@ export class IncomesOutcomesComponent implements OnInit {
       let resultModel: IncomesOutcomesModel = {
         haveQuotas: true,
         groupNumber: 60,
-        patientModel:
-          'ИБС со стенотическим или окклюзионным поражением коронарных артерий',
-        healingMethod:
-          'ротационная коронарная атерэктомия, баллонная вазодилятация с установкой 1-3 стентов в коронарные артерии',
+        // patientModel:
+        //   'ИБС со стенотическим или окклюзионным поражением коронарных артерий',
+        // healingMethod:
+        //   'ротационная коронарная атерэктомия, баллонная вазодилятация с установкой 1-3 стентов в коронарные артерии',
+        patientModel: this.patientModels[12],
+        healingMethod: this.healMethods[12],
         summaryPatientsCount: 0,
         // было тут сто
         countNeedToRA: -1,
