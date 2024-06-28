@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
       this.homePageText = '🏚️ Home';
       this.tarrifsPageText = '1️⃣ Tariff calculation';
       this.pricingPageText = '2️⃣ Cost of medical devices';
-      this.incomesoutcomesPageText = '3️⃣ MO incomes and outcomes';
+      this.incomesoutcomesPageText = '3️⃣ Incomes and expenses';
     }
   }
 }

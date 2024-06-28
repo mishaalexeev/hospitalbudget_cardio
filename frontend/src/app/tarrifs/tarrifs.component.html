@@ -4,7 +4,7 @@
       <clr-combobox
         name="regions"
         [(ngModel)]="displayPickedRegion"
-        [placeholder]="'Выберите регион'"
+        [placeholder]="textChooseRegion"
         [clrLoading]="loadingRegions"
       >
         <clr-options>
@@ -97,7 +97,7 @@
     </div>
     <ng-container *ngIf="tarrifDatasource.data.length < 1 && !loadingTable">
       <div class="clr-row" style="text-align: center">
-        <h4 style="width: 100%">Данные не загружены</h4>
+        <h4 style="width: 100%">{{textDataUnloaded}}</h4>
       </div>
     </ng-container>
     <ng-container *ngIf="loadingTable">

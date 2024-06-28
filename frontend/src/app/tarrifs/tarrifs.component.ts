@@ -19,6 +19,8 @@ export class TarrifsComponent implements OnInit {
   textZP!: string;
   textZPInfo!: string;
   textButtonCount!: string;
+  textChooseRegion!: string;
+  textDataUnloaded!: string;
 
   loadingRegions: boolean = false;
   loadingTable: boolean = false;
@@ -52,6 +54,8 @@ export class TarrifsComponent implements OnInit {
       this.textZPInfo =
         'Доля на заработную плату (ДЗП) и пр.расходы вычитается из тарифа.';
       this.textButtonCount = 'Рассчитать тариф';
+      this.textChooseRegion = 'Выберите регион';
+      this.textDataUnloaded = 'Данные не загружены';
     } else if (this.currentLanguage === 'EN') {
       this.textGroupVMP = 'HTMC group';
       this.textTarrif = 'Tariff, rub';
@@ -62,6 +66,8 @@ export class TarrifsComponent implements OnInit {
       this.textZPInfo =
         'The share of salary (SS) and other expenses is deducted from the tariff.';
       this.textButtonCount = 'Calculate tariff';
+      this.textChooseRegion = 'Choose region';
+      this.textDataUnloaded = 'Data not loaded';
     }
   }
 

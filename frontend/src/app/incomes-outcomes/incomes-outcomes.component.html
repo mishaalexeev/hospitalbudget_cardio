@@ -17,7 +17,7 @@
 
 <div id="printed-table">
   <p #pdfHeader class="pdfHeader">
-    Результаты вычислений доходов и расходов МИС:
+    Результаты вычислений доходов и расходов:
   </p>
 
   <ng-container *ngIf="!tariffsNotCalculated && !miPriceNotCalculated">
@@ -155,7 +155,7 @@
       </div>
     </div>
     <button class="btn btn-sm" (click)="printPdf(tableHead, pdfHeader)">
-      Распечатать PDF
+      {{textPrintPDF}}
     </button>
   </ng-container>
 </div>

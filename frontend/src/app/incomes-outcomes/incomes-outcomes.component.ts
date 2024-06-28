@@ -97,6 +97,7 @@ export class IncomesOutcomesComponent implements OnInit {
   textTotalIncome!: string;
   textAdditionalPatients!: string;
   textNotApplicable!: string;
+  textPrintPDF!: string;
   patientModels: string[] = [];
   healMethods: string[] = [];
 
@@ -165,6 +166,7 @@ export class IncomesOutcomesComponent implements OnInit {
       this.textAdditionalPatients =
         'Дополнительное число пациентов, которым можно провести ротационную атерэктомию в ходе ЧКВ с 1 стентом';
       this.textNotApplicable = 'Не применимо';
+      this.textPrintPDF = 'Распечатать PDF';
       this.patientModels = RU_TEXTS.patientModels;
       this.healMethods = RU_TEXTS.healMethods;
     } else if (this.currentLanguage === 'EN') {
@@ -177,19 +179,20 @@ export class IncomesOutcomesComponent implements OnInit {
       this.textPatientsNeedRA = 'Number of Patients Needing RA';
       this.textTariffMinusSalary =
         'Tariff minus Salary and Other Expenses, rub.';
-      this.textLPUCostsPerPatient = 'LPU Costs for Consumables per Patient';
-      this.textLPUCostsAllPatients = 'LPU Costs for All Patients';
+      this.textLPUCostsPerPatient = 'Costs for Consumables per Patient';
+      this.textLPUCostsAllPatients = 'Costs for All Patients';
       this.textTotalCosts = 'Total Costs for Consumables, rub.';
       this.textTFOMSBudget =
-        'Budget Received by LPU from TFOMS minus Salary and Other Expenses, rub.';
-      this.textLPUIncome = 'LPU Income, rub.';
+        'Budget Received by MO from CMI fund minus Salary and Other Expenses, rub.';
+      this.textLPUIncome = 'MO Income, rub.';
       this.textWithoutRA = 'Without Rotational Atherectomy';
       this.textWithRA = 'With Rotational Atherectomy';
       this.textTotal = 'Total';
-      this.textTotalIncome = 'Total LPU Income, rub.';
+      this.textTotalIncome = 'Total MO Income, rub.';
       this.textAdditionalPatients =
         'Additional Number of Patients Who Can Undergo Rotational Atherectomy during PCI with 1 Stent';
       this.textNotApplicable = 'Not Applicable';
+      this.textPrintPDF = 'Print PDF';
       this.patientModels = EN_TEXTS.patientModels;
       this.healMethods = EN_TEXTS.healMethods;
     }
