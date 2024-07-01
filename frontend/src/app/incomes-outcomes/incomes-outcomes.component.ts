@@ -184,7 +184,7 @@ export class IncomesOutcomesComponent implements OnInit {
       this.textTariffMinusSalary =
         'Tariff minus Salary and Other Expenses, rub.';
       this.textLPUCostsPerPatient = 'Costs for Consumables per Patient';
-      this.textLPUCostsAllPatients = 'Costs for All Patients';
+      this.textLPUCostsAllPatients = 'Costs for Consumables for all Patients';
       this.textTotalCosts = 'Total Costs for Consumables, rub.';
       this.textTFOMSBudget =
         'Budget Received by MO from CMI fund minus Salary and Other Expenses, rub.';
